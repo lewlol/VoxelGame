@@ -26,16 +26,29 @@ public class PlayerMovement : MonoBehaviour
 
     void Movement()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        rb.velocity = new Vector3(horizontalInput * movementSpeed, rb.velocity.y, verticalInput * movementSpeed);
+        if (Input.GetKey(KeyCode.W))
+        {
+            rb.velocity = transform.forward * movementSpeed;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            rb.velocity = -transform.forward * movementSpeed;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            rb.velocity = -transform.right * movementSpeed;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            rb.velocity = transform.right * movementSpeed;
+        }        
     }
 
     void Jump()
     {
         if (Input.GetButtonDown("Jump") && isGrounded == true)
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+            rb.velocity = transform.up * jumpForce;
         }
     }
 

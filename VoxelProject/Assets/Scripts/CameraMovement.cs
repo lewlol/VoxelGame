@@ -35,19 +35,9 @@ public class CameraMovement : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0, _rotY, 0);
         transform.position = target.position - (rotation * _offset);
         transform.LookAt(target);
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            //Doesnt Rotate With Cam -- Lets the Player see the front of their Character
-        }
-        else
+        if (!Input.GetKey(KeyCode.LeftControl))
         {
             target.transform.rotation = rotation;
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            transform.position = ogPos;
-            transform.rotation = ogRot;
         }
     }
 
