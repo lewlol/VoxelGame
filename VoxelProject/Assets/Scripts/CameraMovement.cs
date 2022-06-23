@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -9,8 +10,6 @@ public class CameraMovement : MonoBehaviour
     private Vector3 _offset;
     private Vector3 ogPos;
     private Quaternion ogRot;
-    private float mouseSpeed;
-    bool dontRotate;
 
     void Start()
     {
@@ -25,7 +24,8 @@ public class CameraMovement : MonoBehaviour
     {
         Rotate();
         Zooming();
-        MaxZooming();
+        MaxZoom();
+        ResetZoom();
     }
 
     void Rotate()
@@ -35,39 +35,47 @@ public class CameraMovement : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0, _rotY, 0);
         transform.position = target.position - (rotation * _offset);
         transform.LookAt(target);
-        if (!Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+
+        } else
         {
             target.transform.rotation = rotation;
         }
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            transform.position = ogPos;
+            transform.rotation = ogRot;
+        }
     }
-
     void Zooming()
     {
-        mouseSpeed = Input.GetAxis("Mouse ScrollWheel");
-
-        if (mouseSpeed > 0)
+        if(Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            gameObject.GetComponent<Camera>().fieldOfView -= 5f;
-        }else if(mouseSpeed < 0)
+            gameObject.GetComponent<Camera>().fieldOfView -= 5;
+        } else if(Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            gameObject.GetComponent<Camera>().fieldOfView += 5f;
+            gameObject.GetComponent<Camera>().fieldOfView += 5;
         }
-
-        if (Input.GetMouseButtonDown(2))
-        {
-            gameObject.GetComponent<Camera>().fieldOfView = 60;
-        }
+        
     }
-
-    void MaxZooming()
+    void MaxZoom()
     {
-        if(gameObject.GetComponent<Camera>().fieldOfView < 30)
+        if(gameObject.GetComponent<Camera>().fieldOfView >= 100)
+        {
+            gameObject.GetComponent<Camera>().fieldOfView = 100;
+        }
+        if(gameObject.GetComponent<Camera>().fieldOfView <= 30)
         {
             gameObject.GetComponent<Camera>().fieldOfView = 30;
         }
-        if(gameObject.GetComponent<Camera>().fieldOfView > 100)
+    }
+
+    void ResetZoom()
+    {
+        if (Input.GetMouseButtonDown(2))
         {
-            gameObject.GetComponent<Camera>().fieldOfView = 100;
+            gameObject.GetComponent<Camera>().fieldOfView = 60;
         }
     }
 }
