@@ -726,6 +726,7 @@ GameObject:
   - component: {fileID: 2056311981}
   - component: {fileID: 2056311982}
   - component: {fileID: 2056311983}
+  - component: {fileID: 2056311984}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -778,7 +779,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e943a85ff4dd53a4086d2f5ea63ec4f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed:
+    baseStat: 10
   groundDrag: 1
   jumpForce: 5
   jumpCooldown: 0.7
@@ -802,3 +804,21 @@ MonoBehaviour:
   - {fileID: -2432090755550338912, guid: 67661fbe7167cf846bc0cdf86de3a05c, type: 3}
   delay: 0.15
   currentModel: 0
+--- !u!114 &2056311984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056311980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5762a263583e1784ca75b792e83445d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth:
+    baseStat: 70
+  damage:
+    baseStat: 1
+  speed:
+    baseStat: 0
