@@ -16,8 +16,6 @@ public class CameraMovement : MonoBehaviour
         _rotY = transform.eulerAngles.y;
         _offset = target.position - transform.position;
         Cursor.lockState = CursorLockMode.Locked;
-        ogPos = transform.position;
-        ogRot = transform.rotation;
     }
 
     void LateUpdate()
@@ -35,18 +33,11 @@ public class CameraMovement : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0, _rotY, 0);
         transform.position = target.position - (rotation * _offset);
         transform.LookAt(target);
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-
-        } else
+        if (!Input.GetKey(KeyCode.LeftControl))
         {
             target.transform.rotation = rotation;
         }
-        if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            transform.position = ogPos;
-            transform.rotation = ogRot;
-        }
+        
     }
     void Zooming()
     {

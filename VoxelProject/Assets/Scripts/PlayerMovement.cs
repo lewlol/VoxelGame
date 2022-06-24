@@ -28,12 +28,18 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform orientation;
 
-    float horizontalInput;
-    float verticalInput;
+    public float horizontalInput;
+    public float verticalInput;
 
     Vector3 moveDirection;
 
     Rigidbody rb;
+
+    public MeshFilter model;
+    public Mesh idle;
+    public Mesh[] walkingAnim;
+    public float delay;
+    public int currentModel = 0;
 
     private void Start()
     {
@@ -50,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
 
         MyInput();
         SpeedControl();
+        Sprinting();
+        WalkingAnim();
 
         // handle drag
         if (grounded)
@@ -115,5 +123,40 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    private void Sprinting()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            moveSpeed += 5f;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            moveSpeed -= 5f;
+        }
+    }
+
+    private void WalkingAnim()
+    {
+        if(horizontalInput != 0 || verticalInput != 0)
+        {
+            float countdown;            
+            countdown = delay -= Time.deltaTime;          
+            if(delay <= 0f)
+            {
+                currentModel++;
+                delay = 0.15f;
+            }         
+            if(currentModel >= 4)
+            {
+                currentModel = 0;
+            }
+            model.mesh = walkingAnim[currentModel];
+        }
+        else
+        {
+            model.mesh = idle;
+        }
     }
 }
