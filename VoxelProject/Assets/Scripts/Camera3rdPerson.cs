@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraMovement : MonoBehaviour
+public class Camera3rdPerson : MonoBehaviour
 {
     [SerializeField] private Transform target;
     public float rotSpeed = 1.5f;
@@ -37,26 +37,27 @@ public class CameraMovement : MonoBehaviour
         {
             target.transform.rotation = rotation;
         }
-        
+
     }
     void Zooming()
     {
-        if(Input.GetAxis("Mouse ScrollWheel") > 0)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             gameObject.GetComponent<Camera>().fieldOfView -= 5;
-        } else if(Input.GetAxis("Mouse ScrollWheel") < 0)
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             gameObject.GetComponent<Camera>().fieldOfView += 5;
         }
-        
+
     }
     void MaxZoom()
     {
-        if(gameObject.GetComponent<Camera>().fieldOfView >= 100)
+        if (gameObject.GetComponent<Camera>().fieldOfView >= 100)
         {
             gameObject.GetComponent<Camera>().fieldOfView = 100;
         }
-        if(gameObject.GetComponent<Camera>().fieldOfView <= 30)
+        if (gameObject.GetComponent<Camera>().fieldOfView <= 30)
         {
             gameObject.GetComponent<Camera>().fieldOfView = 30;
         }
